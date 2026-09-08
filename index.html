@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Web Games | Amey Bendale</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.08), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(140, 0, 255, 0.08), transparent 30%),
+        #05070d;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Background grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 45px 45px;
+      mask-image: linear-gradient(to bottom, black, transparent);
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: auto;
+      padding: 70px 0 50px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid rgba(0, 255, 255, 0.35);
+      border-radius: 50px;
+      color: #00ffff;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      background: rgba(0, 255, 255, 0.04);
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ffffff, #00ffff, #9d5cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+    }
+
+    .subtitle {
+      color: #8d96a8;
+      font-size: 17px;
+      max-width: 600px;
+      margin: auto;
+      line-height: 1.7;
+    }
+
+    /* Games */
+    .games {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .game-card {
+      position: relative;
+      min-height: 360px;
+      padding: 32px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 22px;
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.07),
+        rgba(255,255,255,0.025)
+      );
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+
+    .game-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: #00ffff;
+      filter: blur(100px);
+      opacity: 0.08;
+      top: -100px;
+      right: -80px;
+      transition: opacity 0.35s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 255, 255, 0.45);
+    }
+
+    .game-card:hover::before {
+      opacity: 0.18;
+    }
+
+    .game-number {
+      color: #596273;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 35px;
+    }
+
+    .game-icon {
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      background: rgba(0,255,255,0.08);
+      border: 1px solid rgba(0,255,255,0.2);
+      font-size: 34px;
+      margin-bottom: 25px;
+    }
+
+    .game-card:nth-child(2) .game-icon {
+      background: rgba(157,92,255,0.08);
+      border-color: rgba(157,92,255,0.2);
+    }
+
+    .game-title {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .game-description {
+      color: #8d96a8;
+      line-height: 1.6;
+      font-size: 15px;
+      margin-bottom: 28px;
+      max-width: 430px;
+    }
+
+    .play-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 23px;
+      border-radius: 10px;
+      background: #00ffff;
+      color: #05070d;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .play-button:hover {
+      transform: translateX(5px);
+      box-shadow: 0 0 25px rgba(0,255,255,0.35);
+    }
+
+    .game-card:nth-child(2) .play-button {
+      background: #9d5cff;
+      color: white;
+    }
+
+    .game-card:nth-child(2) .play-button:hover {
+      box-shadow: 0 0 25px rgba(157,92,255,0.4);
+    }
+
+    .arrow {
+      font-size: 17px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 65px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: #555d6d;
+      font-size: 13px;
+    }
+
+    footer span {
+      color: #8d96a8;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      .container {
+        padding-top: 45px;
+      }
+
+      .games {
+        grid-template-columns: 1fr;
+      }
+
+      .game-card {
+        min-height: auto;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <header class="header">
+      <div class="tag">AMEY BENDALE // GAME HUB</div>
+
+      <h1>WEB GAMES</h1>
+
+      <p class="subtitle">
+        A collection of interactive browser games.
+        Choose your game and jump straight into the action.
+      </p>
+    </header>
+
+
+    <section class="games">
+
+      <!-- City Driver -->
+      <article class="game-card">
+
+        <div class="game-number">01 / DRIVING</div>
+
+        <div class="game-icon">🚗</div>
+
+        <h2 class="game-title">City Driver</h2>
+
+        <p class="game-description">
+          Hit the streets and experience an interactive
+          driving adventure through the city.
+        </p>
+
+        <a class="play-button" href="city_driver.html">
+          PLAY GAME
+          <span class="arrow">→</span>
+        </a>
+
+      </article>
+
+
+      <!-- Rainforest Ops -->
+      <article class="game-card">
+
+        <div class="game-number">02 / ADVENTURE</div>
+
+        <div class="game-icon">🌲</div>
+
+        <h2 class="game-title">Rainforest Ops</h2>
+
+        <p class="game-description">
+          Enter the rainforest and take on an
+          action-packed interactive experience.
+        </p>
+
+        <a class="play-button" href="rainforest_ops.html">
+          PLAY GAME
+          <span class="arrow">→</span>
+        </a>
+
+      </article>
+
+    </section>
+
+
+    <footer>
+      Built by <span>Amey Bendale</span> · Web Games
+    </footer>
+
+  </main>
+
+</body>
+</html>
